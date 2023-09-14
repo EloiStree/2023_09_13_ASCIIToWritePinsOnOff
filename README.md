@@ -6,6 +6,9 @@ I experimented a small problem with HC06... It is very very very slow and if you
 So with 9600 the only way to make it "fast" is to turn byte in actions instead of using text commands.
 A char is 
 
+
+----------------------------------------------------
+
 ```
 ↑ ↓ → ←
 32	 
