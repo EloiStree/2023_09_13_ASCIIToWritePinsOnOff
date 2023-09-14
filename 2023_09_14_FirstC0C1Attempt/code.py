@@ -1,6 +1,7 @@
 # Previous project on thee topic:
 # https://github.com/EloiStree/2023_06_28_RasperryPiPicoToRemoteControlRCExostCar/
 # https://github.com/EloiStree/2023_06_29_MicroPythonUART2PinOnOff
+#98:D3:21:F7:3B:8D
 import time
 from machine import Pin
 from machine import UART
@@ -518,7 +519,7 @@ def uartToAction(c0, c1):
         elif c0=='~' :
             print("Add Code")
 
-    elif c1=='2':
+    elif c1=='3':
         if c0=='!' :
             print("Add Code")
         elif c0=='"' :
@@ -689,7 +690,7 @@ def uartToAction(c0, c1):
             print("Add Code")
 
 
-    elif c1=='3':
+    elif c1=='2':
         if c0=='!' :
             print("Add Code")
         elif c0=='"' :
