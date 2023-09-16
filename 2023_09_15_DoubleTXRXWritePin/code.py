@@ -9,7 +9,7 @@ import sys
 import utime
 
 #startcommand="A1B1C1D1 E1F1G1H1 I1J1K0L0 M0N0O0P0 Q0R0S0T0 U0V0W0X0 "
-startcommand="G3H3I3J3 K3L3M3N3 O2P2 Q2R2S2T2 U2V2W2X2 "
+startcommand="G3H3I3J3 K3L3M3N3 O3P3 Q2R2S2T2 U2V2W2X2 "
 
 #baudrate1=9600 #Default
 baudrate1=38400 #Fast Bluetooth
@@ -975,6 +975,7 @@ while True:
         data = uart.read(1)
         try:
             c = data.decode('utf-8')
+            print(c)
             if c=='0' or c=='1'  or  c=='2'  or  c=='3'  or  c=='4'  or  c=='5'  or  c=='6'  or  c=='7'  or  c=='8'  or  c=='9' :
                 charTwo= c
                 uartToAction(charOne,charTwo)
@@ -992,6 +993,7 @@ while True:
             data2 = uartble.read(1)
             try:
                 c2 = data2.decode('utf-8')
+                print(c2)
                 if c2=='0' or c2=='1'  or  c2=='2'  or  c2=='3'  or  c2=='4'  or  c2=='5'  or  c2=='6'  or  c2=='7'  or  c2=='8'  or  c2=='9' :
                    charTwo2= c2
                    uartToAction(charOne2,charTwo2)
