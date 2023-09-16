@@ -8,6 +8,9 @@ from machine import UART
 import sys
 import utime
 
+#startcommand="A1B1C1D1 E1F1G1H1 I1J1K0L0 M0N0O0P0 Q0R0S0T0 U0V0W0X0 "
+startcommand="G3H3I3J3 K3L3M3N3 O2P2 Q2R2S2T2 U2V2W2X2 "
+
 #baudrate1=9600 #Default
 baudrate1=38400 #Fast Bluetooth
 #baudrate1=115200 #Fast USB TTL
@@ -22,6 +25,7 @@ debug_test=False
 debug_full_test=False
 
 usePrintlog=False
+# If you want to have Bluetooth and TTL usb cable to controle the device.
 useTwoTXRX=True
 
 
@@ -73,6 +77,10 @@ def set_all_to(state):
 def set_pin_to(index ,state):
     if index>-1 and index < len(pins_id_created) :
         pins_id_created[index].value( state)
+        
+def inverse_pin_to(index ):
+    if index>-1 and index < len(pins_id_created) :
+        pins_id_created[index].value( not pins_id_created[index].value)
         
 def set_gpio_to(index ,state):
     for p in pins_id_auto_created:
@@ -136,6 +144,13 @@ def step_blink():
         time.sleep(0.1)
         pin.value(False)
         time.sleep(0.1)
+
+def inverse_step_blink():
+    for pin in pins_id_created:
+        pin.value(not pin.value())
+        time.sleep(0.5)
+        pin.value(not pin.value())
+        time.sleep(0.5)
         
 def line_blink():
     for pin in pins_id_created:
@@ -147,9 +162,9 @@ def line_blink():
 
 
 def full_test():
+    step_blink()
     blink_all()
     line_blink()
-    step_blink()
 
 
 
@@ -905,10 +920,10 @@ if debug_test:
     while True:
         for pin in pins_id_created:
             pin.value(True)
-            time.sleep(0.1)
+            time.sleep(0.7)
         for pin in pins_id_created:
             pin.value(False)
-            time.sleep(0.1)
+            time.sleep(0.7)
 
 
 if debug_full_test:
@@ -927,17 +942,34 @@ charUtf8Int=0
 c=' '
 charOne=' '
 charTwo=' '
-
-line2 = b''  # Initialize an empty line buffer
 data2 = ' '
+
 c2=' '
 charOne2=' '
 charTwo2=' '
+
+c3=' '
+charOne3=' '
+charTwo3=' '
 #A1B1C1D1E1F1G1H1I1J1K1L1M1N1O1P1Q1R1S1T1U1V1W1X1
 #A0B0C0D0E0F0G0H0I0J0K0L0M0N0O0P0Q0R0S0T0U0V0W0X0
 #A1B1C1D1E1F1G1H1I1J1K1L1M1N1O1P1Q1R1S1T1U1V1W1X1 A0B0C0D0E0F0G0H0I0J0K0L0M0N0O0P0Q0R0S0T0U0V0W0X0
 #A2B2C2D2E2F2G2H2I2J2K2L2M2N2O2P2Q2R2S2T2U2V2W2X2Y2Z2a2b2
 #A3B3C3D3E3F3G3H3I3J3K3L3M3N3O3P3Q3R3S3T3U3V3W3X3Y3Z3a3b3
+
+def uartToActionString(message):
+    for	c3 in message:
+        if c3=='0' or c3=='1'  or  c3=='2'  or  c3=='3'  or  c3=='4'  or  c3=='5'  or  c3=='6'  or  c3=='7'  or  c3=='8'  or  c3=='9' :
+            charTwo3= c3
+            uartToAction(charOne3,charTwo3)
+        else :
+            charOne3 = c3
+        if usePrintlog:
+            print(f"Code Point: {c3} {charOne3}  {charTwo3}")
+    
+    
+uartToActionString(startcommand)
+inverse_step_blink()
 while True:
     if uart.any():
         data = uart.read(1)
